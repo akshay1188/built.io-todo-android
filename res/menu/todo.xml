@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+	
+    <item
+        android:id="@+id/addTaskMenu"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:icon="@drawable/addbutton"/>
+    
+    <item
+        android:id="@+id/sign_Out"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="@string/builtio_sign_out"/>
+
+</menu>
