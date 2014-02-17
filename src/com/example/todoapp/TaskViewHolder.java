@@ -28,7 +28,7 @@ public class TaskViewHolder {
 		updateValues = updatedList;
 		
 		taskNamewithStatus.setText(taskModel.getTaskName());	
-
+		
 		if(taskModel.getCheckStatus()){
 			taskNamewithStatus.setPaintFlags(taskNamewithStatus.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 			taskNamewithStatus.setChecked(taskModel.getCheckStatus());

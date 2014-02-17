@@ -1,9 +1,9 @@
 package com.example.todoapp;
 
 
-import com.raweng.built.Built;
-
 import android.app.Application;
+
+import com.raweng.built.Built;
 
 public class TodoAppApplication extends Application{
 
@@ -12,7 +12,7 @@ public class TodoAppApplication extends Application{
 		super.onCreate();
 
 		try {
-			Built.initializeWithApiKey(getApplicationContext(), "api_key" , "app_uid");
+			Built.initializeWithApiKey(getApplicationContext(), "bltad1e7e5f0cabdd5a" , "todoapp");
 			
 		} catch (Exception e) {
 			e.printStackTrace();

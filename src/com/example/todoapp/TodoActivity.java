@@ -8,7 +8,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -21,6 +20,7 @@ import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.raweng.built.BuiltACL;
 import com.raweng.built.BuiltError;
@@ -36,7 +36,6 @@ public class TodoActivity extends Activity {
 
 	BuiltUIListViewController listView;
 	String userUid;
-
 	ArrayList<BuiltObject> listObjects = new ArrayList<BuiltObject>();
 	private HashMap<String, Boolean> updatedList = new HashMap<String, Boolean>();
 
@@ -54,7 +53,7 @@ public class TodoActivity extends Activity {
 		progressDialog	= new ProgressDialog(TodoActivity.this);
 
 		fetchTaskWithBuiltQuery();
-		
+
 	}
 
 	public void fetchTaskWithBuiltQuery(){
@@ -63,7 +62,7 @@ public class TodoActivity extends Activity {
 		progressDialog.setTitle("Todo App");
 		progressDialog.setMessage("Fetching Tasks...");
 
-		listView.builtQueryInstance.descending("updated_at");
+		listView.getBuiltQueryInstance().descending("updated_at");
 		listView.loadData(new BuiltListViewResultCallBack() {
 
 			@Override
@@ -95,14 +94,14 @@ public class TodoActivity extends Activity {
 
 				}else{
 					viewholder = (TaskViewHolder) convertView.getTag();
-					viewholder.taskNamewithStatus.setPaintFlags(viewholder.taskNamewithStatus.getPaintFlags()& (~ Paint.STRIKE_THRU_TEXT_FLAG));
 					viewholder.taskNamewithStatus.setText("");
+					
 				}
 
 				final String taskName = builtObject.getString("task_name");
 				final String taskUid  = builtObject.getUid();
 				boolean taskStatus = builtObject.getBoolean("task_status");
-				
+
 				if(viewholder.updateValues != null){
 					for (String iterable_element : viewholder.updateValues.keySet()) {
 						if(viewholder.updateValues.containsKey(taskUid)){
@@ -117,6 +116,16 @@ public class TodoActivity extends Activity {
 				listView.notifyDataSetChanged();
 				return convertView;
 			}
+
+			@Override
+			public int getItemViewType(int position) {
+				return 0;
+			}
+
+			@Override
+			public int getViewTypeCount() {
+				return 0;
+			}
 		});
 	}
 
@@ -130,21 +139,21 @@ public class TodoActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		switch(item.getItemId()){
-		
+
 		case R.id.addTaskMenu:
-			
+
 			final EditText addTextEditText = new EditText(TodoActivity.this);
 			addTextEditText.setSingleLine();
 			addTextEditText.setHint("Buy Milk...");
-			
+
 			AlertDialog.Builder alertDialog = new AlertDialog.Builder(TodoActivity.this);
 			alertDialog.setView(addTextEditText);
 			alertDialog.setTitle("Add Task");
 			alertDialog.setPositiveButton("Add Task", new OnClickListener() {
-				
+
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					
+
 					final String newTask = addTextEditText.getText().toString();
 					addTextEditText.setText("");
 
@@ -174,7 +183,7 @@ public class TodoActivity extends Activity {
 							public void onSuccess() {
 								listView.insertBuiltObjectAtIndex(0,newTaskBuiltObject);
 								listView.notifyDataSetChanged();
-								
+
 							}
 
 							@Override
@@ -195,22 +204,22 @@ public class TodoActivity extends Activity {
 						AlertDialog.Builder alertDialog = new AlertDialog.Builder(TodoActivity.this);
 						alertDialog.setTitle("Todo Task").setMessage("Please Provide Task").show();
 					}
-					
+
 				}
 			});
 			alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-				
+
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.dismiss();
-					
+
 				}
 			});
 			alertDialog.show();
-			
+
 			break;
-			
-		case R.id.sign_Out:
+
+		case R.id.log_Out:
 
 			progressDialog.show();
 			progressDialog.setTitle("Todo App");progressDialog.setMessage("Loging out...");
@@ -220,6 +229,7 @@ public class TodoActivity extends Activity {
 
 				@Override
 				public void onSuccess() {
+					Toast.makeText(TodoActivity.this, "logout successfully...", Toast.LENGTH_SHORT).show();
 					finish();				
 				}
 

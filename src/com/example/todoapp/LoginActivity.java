@@ -18,7 +18,7 @@ public class LoginActivity extends BuiltUILoginController{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		user = BuiltUser.getCurrentUser();
+		user = BuiltUser.getSession();
 		
 		if(user != null){
 			Intent startTodoIntent = new Intent(LoginActivity.this, TodoActivity.class);
