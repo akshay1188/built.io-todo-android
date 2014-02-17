@@ -7,7 +7,7 @@
         android:icon="@drawable/addbutton"/>
     
     <item
-        android:id="@+id/sign_Out"
+        android:id="@+id/log_Out"
         android:orderInCategory="100"
         android:showAsAction="always"
         android:title="@string/builtio_sign_out"/>
