@@ -168,7 +168,7 @@ public class TodoActivity extends Activity {
 						newTaskBuiltObject.set("task_name", newTask);
 						newTaskBuiltObject.set("task_status", false);
 
-						BuiltACL acl = new BuiltACL();
+						BuiltACL acl = builtApplication.acl();
 
 						acl.setUserDeleteAccess(userUid, true);
 						acl.setUserReadAccess(userUid, true);
